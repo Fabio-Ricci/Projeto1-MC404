@@ -1,0 +1,3 @@
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/rebuild_cache.dir
