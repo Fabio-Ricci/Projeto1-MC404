@@ -1,5 +1,6 @@
-#include "montador.h"
 #include <stdio.h>
+#include "montador.h"
+#include "token.h"
 
 /*
 Exemplo de erros:
@@ -20,85 +21,86 @@ const char* get_error_string (enum errors code) {
         * 1 caso haja erro na montagem;
         * 0 caso não haja erro.
 */
-int ehRotulo(char* palavra){
-    return 0;
-}
 
-int ehDiretiva(char* palavra){
-    return 0;
-}
-
-int ehInstrucao(char* palavra){
-    return 0;
-}
-
-int ehHexadecimal(char* palavra){
-    return 0;
-}
-
-int ehDecimal(char* palavra){
-    return 0;
-}
-
-int ehNome(char* palavra){
-    return 0;
-}
-
-char *eliminaComentarios(char *entrada){
-    return strtok(entrada, '#');
+/**
+ * Cria um token e coloca no vetor de token
+ */
+void criaToken(char *palavra, TipoDoToken tipo, int numLinha){
+  Token token;
+  token.tipo = tipo;
+  token.linha = numLinha;
+  strcpy(token.palavra, palavra);
+  adicionarToken(token);
 }
 
 /**
- * splita a linha em tokens e coloca no vetor de tokens
- *
- * retorna 0 se linha válida
- * retorna 1 se linha inválida*/
-int processaLinha(char *entrada){
-    entrada = eliminaComentarios(entrada); //elimina comentário
-    char delimit[] = " \t";
-    int achouRotulo = 0, achouDiretiva = 0;
-    int ehRotulo = 0, ehDiretiva = 0, ehInstrucao, ehHexadecimal, ehDecimal = 0, ehNome = 0;
-
-    char *token = strtok(entrada, delimit);
-    while (token != NULL) {
-        ehRotulo = ehRotulo(token);
-        ehDiretiva = ehDiretiva(token);
-        ehInstrucao = ehInstrucao(token);
-        ehHexadecimal = ehHexadecimal(token);
-        ehDecimal = ehDecimal(token);
-        ehInstrucao = ehNome(token);
-//        if (ehRotulo) {
-//            if (!achouRotulo && !achouDiretiva) {
-//                achouRotulo = 1;
-//            } else {
-//                //retulo depois de rotulo ou diretiva
-//            }
-//        }
-//        if (ehDiretiva) {
-//            if (!achouRotulo && !achouDiretiva) {
-//                achouDiretiva = 1;
-//            } else {
-//                //diretiva depois de rotulo ou diretiva
-//            }
-//        }
-
-
-        token = strtok(NULL, delimit);
-    }
-    return 0;
+ * Processa uma palavra
+ * retorna ERROR_OFFSET (-1000) se palavra invalida
+ * retorna 0 se palavra válida
+ */
+int processaPalavra(char *palavra, int numLinha) {
+  return ERROR_OFFSET;
 }
 
-int processarEntrada(char* entrada, unsigned tamanho)
-{
-    char delimit[] = "\n";
+char *eliminaComentarios(char *linha) { return strtok(linha, '#'); }
 
-    char *token = strtok(entrada, delimit);
-    while (token != NULL) {
-        if (processaLinha(token)){
-            return 1;
-        }
-        token = strtok(NULL, delimit);
+/**
+ * Processa uma linha, palavra por palavra
+ *
+ * retorna ERROR_OFFSET (-1000) se linha invalida
+ * retorna 0 linha válida
+ */
+int processaLinha(char *linha, int numLinha) {
+  linha = eliminaComentarios(linha);  // elimina comentário
+  char delimit[] = " \t";
+  int achouRotulo = 0, achouDiretiva = 0, tipoPalavra;
+
+  char *palavra = strtok(linha, delimit);
+  while (palavra != NULL) {
+    tipoPalavra = processaPalavra(palavra, numLinha);
+
+    if (tipoPalavra == ERROR_OFFSET) {
+      return ERROR_OFFSET;
     }
-    /* printf("Você deve implementar esta função para a Parte 1.\n"); */
-    return 0;
+
+    palavra = strtok(NULL, delimit);
+  }
+  return 0;
+}
+
+/**
+ * Transforma as letras de uma palavra em minúsculas
+ */
+char *toLowerCase(char *entrada) {
+  int i;
+  for (i = 0; entrada[i] != '\0'; i++) {
+    entrada[i] = toLower(entrada[i]);
+  }
+  return entrada;
+}
+
+/**
+ * Processa o a entrada linha a linha
+ * retorna 0 se entrada válida
+ * retorna 1 se entrada inválida
+ */
+int processarEntrada(char *entrada, unsigned tamanho) {
+  entrada = toLowerCase(entrada);
+  char delimit[] = "\n";
+
+  Token token;
+  int numLinha = 1, tipoLinha;
+  char *linha = strtok(entrada, delimit);
+  while (linha != NULL) {
+    tipoLinha = processaLinha(linha, numLinha);
+    numLinha++;
+
+    if (tipoLinha == ERROR_OFFSET) {
+      return 1;  // erro
+    }
+
+    linha = strtok(NULL, delimit);
+  }
+  /* printf("Você deve implementar esta função para a Parte 1.\n"); */
+  return 0;
 }

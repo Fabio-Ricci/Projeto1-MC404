@@ -34,8 +34,6 @@ enum errors {
     ERR_NOME_INVALIDO,
 };
 
-int ehHexadecimal(char* palavra);
-int ehDiretiva(char* palavra);
 int processarEntrada(char*, unsigned);
 int emitirMapaDeMemoria();
 
