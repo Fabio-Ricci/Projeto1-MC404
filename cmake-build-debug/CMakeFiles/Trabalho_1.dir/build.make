@@ -69,19 +69,64 @@ CMakeFiles/Trabalho_1.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Trabalho_1.dir/src/main.c.s"
 	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\main.c" -o CMakeFiles\Trabalho_1.dir\src\main.c.s
 
+CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj: CMakeFiles/Trabalho_1.dir/flags.make
+CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj: ../src/processarEntrada.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Trabalho_1.dir\src\processarEntrada.c.obj   -c "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\processarEntrada.c"
+
+CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\processarEntrada.c" > CMakeFiles\Trabalho_1.dir\src\processarEntrada.c.i
+
+CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\processarEntrada.c" -o CMakeFiles\Trabalho_1.dir\src\processarEntrada.c.s
+
+CMakeFiles/Trabalho_1.dir/src/token.c.obj: CMakeFiles/Trabalho_1.dir/flags.make
+CMakeFiles/Trabalho_1.dir/src/token.c.obj: ../src/token.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Trabalho_1.dir/src/token.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Trabalho_1.dir\src\token.c.obj   -c "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\token.c"
+
+CMakeFiles/Trabalho_1.dir/src/token.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Trabalho_1.dir/src/token.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\token.c" > CMakeFiles\Trabalho_1.dir\src\token.c.i
+
+CMakeFiles/Trabalho_1.dir/src/token.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Trabalho_1.dir/src/token.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\token.c" -o CMakeFiles\Trabalho_1.dir\src\token.c.s
+
+CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj: CMakeFiles/Trabalho_1.dir/flags.make
+CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj: ../src/emitirMapaDeMemoria.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Trabalho_1.dir\src\emitirMapaDeMemoria.c.obj   -c "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\emitirMapaDeMemoria.c"
+
+CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\emitirMapaDeMemoria.c" > CMakeFiles\Trabalho_1.dir\src\emitirMapaDeMemoria.c.i
+
+CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\src\emitirMapaDeMemoria.c" -o CMakeFiles\Trabalho_1.dir\src\emitirMapaDeMemoria.c.s
+
 # Object files for target Trabalho_1
 Trabalho_1_OBJECTS = \
-"CMakeFiles/Trabalho_1.dir/src/main.c.obj"
+"CMakeFiles/Trabalho_1.dir/src/main.c.obj" \
+"CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj" \
+"CMakeFiles/Trabalho_1.dir/src/token.c.obj" \
+"CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj"
 
 # External object files for target Trabalho_1
 Trabalho_1_EXTERNAL_OBJECTS =
 
 Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/src/main.c.obj
+Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj
+Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/src/token.c.obj
+Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj
 Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/build.make
 Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/linklibs.rsp
 Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/objects1.rsp
 Trabalho_1.exe: CMakeFiles/Trabalho_1.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable Trabalho_1.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Fabio\UNICAMP\MC404\Trabalho 1\Projeto1-MC404\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Trabalho_1.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Trabalho_1.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

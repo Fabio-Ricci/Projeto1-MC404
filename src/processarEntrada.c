@@ -136,7 +136,7 @@ int processaPalavra(char *palavra, int numLinha) {
   return numLinha;
 }
 
-char *eliminaComentarios(char *linha) { return strtok(linha, '#'); }
+char *eliminaComentarios(char *linha) { return strtok(linha, "#"); }
 
 /**
  * Processa uma linha, palavra por palavra
@@ -147,13 +147,13 @@ char *eliminaComentarios(char *linha) { return strtok(linha, '#'); }
 int processaLinha(char *linha, int numLinha) {
   linha = eliminaComentarios(linha);  // elimina comentário
   char delimit[] = " \t";
-  int achouRotulo = 0, achouDiretiva = 0, tipoPalavra;
+  int achouRotulo = 0, achouDiretiva = 0, erroPalavra;
 
   char *palavra = strtok(linha, delimit);
   while (palavra != NULL) {
-    tipoPalavra = processaPalavra(palavra, numLinha);
+      erroPalavra = processaPalavra(palavra, numLinha);
 
-    if (tipoPalavra == ERROR_OFFSET) {
+    if (erroPalavra == numLinha) {
       return numLinha;
     }
 
@@ -168,7 +168,7 @@ int processaLinha(char *linha, int numLinha) {
 char *toLowerCase(char *entrada) {
   int i;
   for (i = 0; entrada[i] != '\0'; i++) {
-    entrada[i] = toLower(entrada[i]);
+    entrada[i] = (char) tolower(entrada[i]);
   }
   return entrada;
 }
@@ -262,7 +262,6 @@ int processarEntrada(char *entrada, unsigned tamanho) {
   entrada = toLowerCase(entrada);
   char delimit[] = "\n";
 
-  Token token;
   int numLinha = 1, erroLexico = 0;
   char *linha = strtok(entrada, delimit);
   while (linha != NULL) {

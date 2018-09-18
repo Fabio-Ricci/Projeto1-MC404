@@ -80,7 +80,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/emitirMapaDeMemoria.c">
+			<Option target="Trabalho_1"/>
+		</Unit>
 		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/main.c">
+			<Option target="Trabalho_1"/>
+		</Unit>
+		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/processarEntrada.c">
+			<Option target="Trabalho_1"/>
+		</Unit>
+		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.c">
+			<Option target="Trabalho_1"/>
+		</Unit>
+		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.h">
 			<Option target="Trabalho_1"/>
 		</Unit>
 		<Unit filename="C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/CMakeLists.txt">

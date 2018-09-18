@@ -122,6 +122,33 @@ Trabalho_1/fast:
 	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/build
 .PHONY : Trabalho_1/fast
 
+src/emitirMapaDeMemoria.obj: src/emitirMapaDeMemoria.c.obj
+
+.PHONY : src/emitirMapaDeMemoria.obj
+
+# target to build an object file
+src/emitirMapaDeMemoria.c.obj:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj
+.PHONY : src/emitirMapaDeMemoria.c.obj
+
+src/emitirMapaDeMemoria.i: src/emitirMapaDeMemoria.c.i
+
+.PHONY : src/emitirMapaDeMemoria.i
+
+# target to preprocess a source file
+src/emitirMapaDeMemoria.c.i:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.i
+.PHONY : src/emitirMapaDeMemoria.c.i
+
+src/emitirMapaDeMemoria.s: src/emitirMapaDeMemoria.c.s
+
+.PHONY : src/emitirMapaDeMemoria.s
+
+# target to generate assembly for a file
+src/emitirMapaDeMemoria.c.s:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.s
+.PHONY : src/emitirMapaDeMemoria.c.s
+
 src/main.obj: src/main.c.obj
 
 .PHONY : src/main.obj
@@ -149,6 +176,60 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/processarEntrada.obj: src/processarEntrada.c.obj
+
+.PHONY : src/processarEntrada.obj
+
+# target to build an object file
+src/processarEntrada.c.obj:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj
+.PHONY : src/processarEntrada.c.obj
+
+src/processarEntrada.i: src/processarEntrada.c.i
+
+.PHONY : src/processarEntrada.i
+
+# target to preprocess a source file
+src/processarEntrada.c.i:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.i
+.PHONY : src/processarEntrada.c.i
+
+src/processarEntrada.s: src/processarEntrada.c.s
+
+.PHONY : src/processarEntrada.s
+
+# target to generate assembly for a file
+src/processarEntrada.c.s:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.s
+.PHONY : src/processarEntrada.c.s
+
+src/token.obj: src/token.c.obj
+
+.PHONY : src/token.obj
+
+# target to build an object file
+src/token.c.obj:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/token.c.obj
+.PHONY : src/token.c.obj
+
+src/token.i: src/token.c.i
+
+.PHONY : src/token.i
+
+# target to preprocess a source file
+src/token.c.i:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/token.c.i
+.PHONY : src/token.c.i
+
+src/token.s: src/token.c.s
+
+.PHONY : src/token.s
+
+# target to generate assembly for a file
+src/token.c.s:
+	$(MAKE) -f CMakeFiles\Trabalho_1.dir\build.make CMakeFiles/Trabalho_1.dir/src/token.c.s
+.PHONY : src/token.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -158,9 +239,18 @@ help:
 	@echo ... edit_cache
 	@echo ... Trabalho_1
 	@echo ... rebuild_cache
+	@echo ... src/emitirMapaDeMemoria.obj
+	@echo ... src/emitirMapaDeMemoria.i
+	@echo ... src/emitirMapaDeMemoria.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/processarEntrada.obj
+	@echo ... src/processarEntrada.i
+	@echo ... src/processarEntrada.s
+	@echo ... src/token.obj
+	@echo ... src/token.i
+	@echo ... src/token.s
 .PHONY : help
 
 
