@@ -1,5 +1,6 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "montador.h"
 #include "token.h"
@@ -24,6 +25,28 @@ const char* get_error_string (enum errors code) {
         * 0 caso não haja erro.
 */
 
+char *strtok1(char *s, char *delim) {
+  if (strcmp(s,"") == 0){
+    return NULL;
+  }
+
+  char *str;
+  int i;
+
+  for (i=0;strchr(delim, s[i]) == NULL;i++){}
+
+  str = malloc((i+1)*sizeof(char));
+  strncpy(str, s, i);
+  str[i]='\0';
+  if (i<strlen(s)) {
+    strncpy(s, s + i + 1, strlen(s) + i);
+    s[strlen(s)] = '\0';
+  } else {
+    s[0] = '\0';
+  }
+  return str;
+}
+
 /**
  * Cria um token e coloca no vetor de token
  */
@@ -31,6 +54,7 @@ void criaToken(char *palavra, TipoDoToken tipo, int numLinha) {
   Token token;
   token.tipo = tipo;
   token.linha = numLinha;
+  token.palavra = malloc(sizeof(char));
   strcpy(token.palavra, palavra);
   adicionarToken(token);
 }
@@ -51,9 +75,9 @@ int ehRotulo(char *palavra) {
 }
 
 int ehDiretiva(char *palavra) {
-  if (strcmp(palavra, ".org") || strcmp(palavra, ".align") ||
-      strcmp(palavra, ".wfill") || strcmp(palavra, ".set") ||
-      strcmp(palavra, ".word")) {
+  if (strcmp(palavra, ".org") == 0|| strcmp(palavra, ".align")  == 0||
+      strcmp(palavra, ".wfill")  == 0|| strcmp(palavra, ".set")  == 0||
+      strcmp(palavra, ".word") == 0) {
     return 1;
   }
   return 0;
@@ -66,7 +90,7 @@ int ehInstrucao(char *palavra) {
                          "lsh",    "rsh",   "storal", "storar"};
   int i;
   for (i = 0; i < 19; i++) {
-    if (strcmp(palavra, intrucoes[i])) {  // verifica se eh alguma das intrucoes
+    if (strcmp(palavra, intrucoes[i]) == 0) {  // verifica se eh alguma das intrucoes
       return 1;
     }
   }
@@ -74,10 +98,10 @@ int ehInstrucao(char *palavra) {
 }
 
 int ehHexadecimal(char *palavra) {
-  if (strlen(palavra) == 10) {
+  if (strlen(palavra) <= 10) {
     if (palavra[0] == '0' && palavra[1] == 'x') {
       int i;
-      for (i = 2; i < 10; i++) {
+      for (i = 2; i < strlen(palavra); i++) {
         if (!isdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
           return 0;
         }
@@ -89,9 +113,9 @@ int ehHexadecimal(char *palavra) {
 }
 
 int ehDecimal(char *palavra) {
-  if (strlen(palavra) == 8) {
+  if (strlen(palavra) <= 8) {
     int i;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < strlen(palavra); i++) {
       if (!isdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
         return 0;
       }
@@ -103,12 +127,33 @@ int ehDecimal(char *palavra) {
 
 int ehNome(char *palavra) { return 0; }
 
+char *trim(char *s)
+{
+  int i = 0;
+  int j = strlen ( s ) - 1;
+  int k = 0;
+
+  while ( isspace ( s[i] ) && s[i] != '\0' )
+    i++;
+
+  while ( isspace ( s[j] ) && j >= 0 )
+    j--;
+
+  while ( i <= j )
+    s[k++] = s[i++];
+
+  s[k] = '\0';
+
+  return s;
+}
+
 /**
  * Processa uma palavra
  * retorna numero da linha se palavra invalida
  * retorna 0 se palavra válida
  */
 int processaPalavra(char *palavra, int numLinha) {
+  trim(palavra);
   if (ehRotulo(palavra)) {
     criaToken(palavra, DefRotulo, numLinha);
     return 0;
@@ -136,7 +181,14 @@ int processaPalavra(char *palavra, int numLinha) {
   return numLinha;
 }
 
-char *eliminaComentarios(char *linha) { return strtok(linha, "#"); }
+char *eliminaComentarios(char *linha) {
+  int i;
+  for (i = 0; i<strlen(linha) && linha[i] != '#'; i++) {}
+  if (i<strlen(linha)){
+    linha[i] = '\0';
+  }
+  return linha;
+}
 
 /**
  * Processa uma linha, palavra por palavra
@@ -145,19 +197,23 @@ char *eliminaComentarios(char *linha) { return strtok(linha, "#"); }
  * retorna 0 linha válida
  */
 int processaLinha(char *linha, int numLinha) {
-  linha = eliminaComentarios(linha);  // elimina comentário
   char delimit[] = " \t";
-  int achouRotulo = 0, achouDiretiva = 0, erroPalavra;
+  int erroPalavra;
+  char *palavra;
 
-  char *palavra = strtok(linha, delimit);
+  eliminaComentarios(linha);  // elimina comentário
+  trim(linha);
+
+  palavra = strtok1(linha, delimit);
   while (palavra != NULL) {
-      erroPalavra = processaPalavra(palavra, numLinha);
+    erroPalavra = processaPalavra(palavra, numLinha);
 
     if (erroPalavra == numLinha) {
       return numLinha;
     }
 
-    palavra = strtok(NULL, delimit);
+    trim(linha);
+    palavra = strtok1(linha, delimit);
   }
   return 0;
 }
@@ -260,20 +316,22 @@ int verificaErroGramatical() {
  */
 int processarEntrada(char *entrada, unsigned tamanho) {
   entrada = toLowerCase(entrada);
+  char *linha;
   char delimit[] = "\n";
-
   int numLinha = 1, erroLexico = 0;
-  char *linha = strtok(entrada, delimit);
+
+  linha = strtok1(entrada, delimit);
   while (linha != NULL) {
-    erroLexico = processaLinha(linha, numLinha);
-    numLinha++;
+    if (strcmp(linha,"") != 0) {
+      erroLexico = processaLinha(linha, numLinha);
 
-    if (erroLexico != 0) {
-      printf("ERRO LEXICO: palavra invalida na linha %d", erroLexico);
-      return 1;  // erro
+      if (erroLexico != 0) {
+        printf("ERRO LEXICO: palavra invalida na linha %d", erroLexico);
+        return 1;  // erro
+      }
     }
-
-    linha = strtok(NULL, delimit);
+    linha = strtok1(entrada, delimit);
+    numLinha++;
   }
   int erroGramatical = verificaErroGramatical();
   if (erroGramatical != 0) {
