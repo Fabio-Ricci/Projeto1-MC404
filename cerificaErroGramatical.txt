@@ -1,0 +1,50 @@
+se DefRotulo: {
+//          if (atual.linha == prox.linha) {
+//            if (prox.tipo == DefRotulo) { // Rotulo apos Rotulo na mesma linha
+//              return prox.linha;
+//            }
+//          }
+//          if (prox.tipo == Hexadecimal || prox.tipo == Decimal || prox.tipo == Nome) { // Hexadecimal, Decimal ou nome apos Rotulo
+//            return prox.linha;
+//          }
+//          break;
+//        }
+//        case Diretiva: {
+//          if (prox.tipo == DefRotulo || prox.tipo == Diretiva || prox.tipo == Instrucao) { // Rotulo, Diretiva ou Instrucao apos Diretiva
+//            return prox.linha;
+//          }
+//          break;
+//        }
+//        case Instrucao: {
+//          if (prox.tipo == DefRotulo || prox.tipo == Diretiva || prox.tipo == Instrucao || prox.tipo == Decimal) { // Rotulo, Diretiva ou Instrucao apos Diretiva
+//            return prox.linha;
+//          }
+//          break;
+//        }
+//        case Hexadecimal: {
+//          if (atual.linha == prox.linha) {
+//            return prox.linha;
+//          }
+//          if (prox.tipo == Decimal || prox.tipo == Hexadecimal || prox.tipo == Nome) { // Decimal, Hexadecimal ou Nome apos Hexadecimal
+//            return prox.linha;
+//          }
+//          break;
+//        }
+//        case Decimal: {
+//          if (atual.linha == prox.linha) {
+//            return prox.linha;
+//          }
+//          if (prox.tipo == Decimal || prox.tipo == Hexadecimal || prox.tipo == Nome) { // Decimal, Hexadecimal ou Nome apos Decimal
+//            return prox.linha;
+//          }
+//          break;
+//        }
+//        case Nome: {
+////          if (atual.linha == prox.linha) {
+////            return prox.linha;
+////          }
+//          if (prox.tipo == Hexadecimal || prox.tipo == Nome) { // Decimal, Hexadecimal ou Nome apos Nome
+//            return prox.linha;
+//          }
+//          break;
+//        }
