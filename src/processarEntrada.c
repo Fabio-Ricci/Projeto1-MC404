@@ -10,20 +10,15 @@ char *strtok1(char *s, char *delim) {
   if (strcmp(s, "") == 0) {
     return NULL;
   }
-
-  char *str;
-  int i;
-
+  unsigned i, len = strlen(s);
   for (i = 0; strchr(delim, s[i]) == NULL; i++) {}
-
-  str = malloc((i + 1) * sizeof(char));
+  char *str = malloc((i+1)*sizeof(char));
   strncpy(str, s, i);
   str[i] = '\0';
-  if (i < strlen(s)) {
-    strncpy(s, s + i + 1, strlen(s) + i);
-    s[strlen(s)] = '\0';
-  } else {
+  if (strcmp(s, str) == 0) {
     s[0] = '\0';
+  } else {
+    strncpy(s, s + i + 1, len);
   }
   return str;
 }
