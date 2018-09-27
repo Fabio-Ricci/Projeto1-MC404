@@ -180,23 +180,17 @@ int processaPalavra(char *palavra, int numLinha) {
     criaToken(palavra, Nome, numLinha);
     return 0;
   }
-  return 0;
   return numLinha;
 }
 
 char *eliminaComentarios(char *linha) {
-  char *str = strtok1(linha, "#");
-  return str;
-//  unsigned i;
-//  if (strchr(linha,  '#') == NULL) {
-//    return linha;
-//  }
-//  for (i = 0; i < strlen(linha) && linha[i] != '#'; i++) {
-//  }
-//  if (i < strlen(linha)) {
-//    linha[i] = '\0';
-//  }
-//  return linha;
+  unsigned i;
+  for (i = 0; i < strlen(linha); i++) {
+    if (linha[i] == '#') {
+      linha[i] = '\0';
+      return linha;
+    }
+  }
 }
 
 /**
@@ -210,7 +204,7 @@ int processaLinha(char *linha, int numLinha) {
   int erroPalavra;
   char *palavra = NULL;
 
-  linha = eliminaComentarios(linha);  // elimina comentário
+  eliminaComentarios(linha);  // elimina comentário
   trim(linha);
 
   palavra = strtok1(linha, delimit);
