@@ -2,23 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "montador.h"
 #include "token.h"
 
 char *strtok1(char *s, char *delim) {
-  if (strcmp(s,"") == 0){
+  if (strcmp(s, "") == 0) {
     return NULL;
   }
 
   char *str;
   int i;
 
-  for (i=0;strchr(delim, s[i]) == NULL;i++){}
+  for (i = 0; strchr(delim, s[i]) == NULL; i++) {}
 
-  str = malloc((i+1)*sizeof(char));
+  str = malloc((i + 1) * sizeof(char));
   strncpy(str, s, i);
-  str[i]='\0';
-  if (i<strlen(s)) {
+  str[i] = '\0';
+  if (i < strlen(s)) {
     strncpy(s, s + i + 1, strlen(s) + i);
     s[strlen(s)] = '\0';
   } else {
@@ -34,7 +35,7 @@ void criaToken(char *palavra, TipoDoToken tipo, int numLinha) {
   Token token;
   token.tipo = tipo;
   token.linha = numLinha;
-  token.palavra = malloc(sizeof(char));
+  token.palavra = malloc((strlen(palavra)+1) * sizeof(char));
   strcpy(token.palavra, palavra);
   adicionarToken(token);
 }
@@ -50,9 +51,9 @@ int ehRotulo(char *palavra) {
     if (palavra[0] == '.' || isdigit(palavra[0])) {
       return 0;  // rótulo inválido comecando com . ou numero
     }
-    for (i = 0; i < strlen(palavra) - 1; i++){
+    for (i = 0; i < strlen(palavra) - 1; i++) {
       if (palavra[i] == ':' || palavra[i] == ' ' || palavra[i] != '_') {
-        if (!isalpha(palavra[i]) && !isdigit(palavra[i])){
+        if (!isalpha(palavra[i]) && !isdigit(palavra[i])) {
           return 0; // : ' ' ou caracter especial no meio do rotulo
         }
       }
@@ -63,8 +64,8 @@ int ehRotulo(char *palavra) {
 }
 
 int ehDiretiva(char *palavra) {
-  if (strcmp(palavra, ".org") == 0|| strcmp(palavra, ".align")  == 0||
-      strcmp(palavra, ".wfill")  == 0|| strcmp(palavra, ".set")  == 0||
+  if (strcmp(palavra, ".org") == 0 || strcmp(palavra, ".align") == 0 ||
+      strcmp(palavra, ".wfill") == 0 || strcmp(palavra, ".set") == 0 ||
       strcmp(palavra, ".word") == 0) {
     return 1;
   }
@@ -72,10 +73,10 @@ int ehDiretiva(char *palavra) {
 }
 
 int ehInstrucao(char *palavra) {
-  char *intrucoes[19] = {"ld",     "ldinv", "ldabs",  "ldmq",  "ldmqmx",
-                         "store",  "jump",  "jumpl",  "jumpr", "add",
-                         "addabs", "sub",   "subabs", "mult",  "div",
-                         "lsh",    "rsh",   "storal", "storar"};
+  char *intrucoes[19] = {"ld", "ldinv", "ldabs", "ldmq", "ldmqmx",
+                         "store", "jump", "jumpl", "jumpr", "add",
+                         "addabs", "sub", "subabs", "mult", "div",
+                         "lsh", "rsh", "storal", "storar"};
   int i;
   for (i = 0; i < 19; i++) {
     if (strcmp(palavra, intrucoes[i]) == 0) {  // verifica se eh alguma das intrucoes
@@ -86,11 +87,11 @@ int ehInstrucao(char *palavra) {
 }
 
 int ehHexadecimal(char *palavra) {
-  if (strlen(palavra) <= 10) {
+  if (strlen(palavra) <= 10 && strlen(palavra) > 0) {
     if (palavra[0] == '0' && palavra[1] == 'x') {
       int i;
       for (i = 2; i < strlen(palavra); i++) {
-        if (!isdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
+        if (!isxdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
           return 0;
         }
       }
@@ -119,7 +120,7 @@ int ehNome(char *palavra) {
     if (palavra[0] == '.' || isdigit(palavra[0])) {
       return 0;  // nome inválido comecando com . ou numero
     }
-    for (i = 0; i < strlen(palavra) - 1; i++){
+    for (i = 0; i < strlen(palavra) - 1; i++) {
       if (palavra[i] == ':' || palavra[i] == ' ') {
         return 0; // : no meio do nome
       }
@@ -129,19 +130,18 @@ int ehNome(char *palavra) {
   return 0;
 }
 
-char *trim(char *s)
-{
+char *trim(char *s) {
   int i = 0;
-  int j = strlen ( s ) - 1;
+  int j = strlen(s) - 1;
   int k = 0;
 
-  while ( isspace ( s[i] ) && s[i] != '\0' )
+  while (isspace(s[i]) && s[i] != '\0')
     i++;
 
-  while ( isspace ( s[j] ) && j >= 0 )
+  while (isspace(s[j]) && j >= 0)
     j--;
 
-  while ( i <= j )
+  while (i <= j)
     s[k++] = s[i++];
 
   s[k] = '\0';
@@ -180,16 +180,23 @@ int processaPalavra(char *palavra, int numLinha) {
     criaToken(palavra, Nome, numLinha);
     return 0;
   }
+  return 0;
   return numLinha;
 }
 
 char *eliminaComentarios(char *linha) {
-  int i;
-  for (i = 0; i<strlen(linha) && linha[i] != '#'; i++) {}
-  if (i<strlen(linha)){
-    linha[i] = '\0';
-  }
-  return linha;
+  char *str = strtok1(linha, "#");
+  return str;
+//  unsigned i;
+//  if (strchr(linha,  '#') == NULL) {
+//    return linha;
+//  }
+//  for (i = 0; i < strlen(linha) && linha[i] != '#'; i++) {
+//  }
+//  if (i < strlen(linha)) {
+//    linha[i] = '\0';
+//  }
+//  return linha;
 }
 
 /**
@@ -201,9 +208,9 @@ char *eliminaComentarios(char *linha) {
 int processaLinha(char *linha, int numLinha) {
   char delimit[] = " \t";
   int erroPalavra;
-  char *palavra;
+  char *palavra = NULL;
 
-  eliminaComentarios(linha);  // elimina comentário
+  linha = eliminaComentarios(linha);  // elimina comentário
   trim(linha);
 
   palavra = strtok1(linha, delimit);
@@ -232,49 +239,153 @@ char *toLowerCase(char *entrada) {
 }
 
 /**
- * Verifica se ha erro lexico
+ * Verifica se decimal esta entre min e max
+ * Retorna 0 se Valido
+ * Retorna 1 se Invalido
+ */
+int verificaIntervaloDecimal(char *palavra, long int min, long int max) {
+  char *aux;
+  long int i = strtol(palavra, &aux, 10);
+  if (i > max || i < min) {
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ * Verifica se ha erro Gramatical
  * Retorna 0 se tokens válidos
  * Retorna numero da linha invalida se tokens invalidos
  */
 int verificaErroGramatical() {
-  int i, numberOfTokens = getNumberOfTokens(), linhaAtual = 1, primeiroLinha = 1;
-  Token atual, prox, ant;
+  int i, numberOfTokens = getNumberOfTokens();
+  Token atual, prox;
   if (numberOfTokens > 0) {
-    for (i = 0; i < numberOfTokens - 1; i++) {
-      atual = recuperaToken(i);
-      prox = recuperaToken(i + 1);
-      switch (atual.tipo) {
-        case DefRotulo: {
-          if (prox.tipo == DefRotulo && prox.linha == atual.linha){
-            return atual.linha;
+    for (i = 0; i < numberOfTokens; i++) {
+      if (i < numberOfTokens) {
+        atual = recuperaToken(i);
+        prox = recuperaToken(i + 1);
+
+        switch (atual.tipo) {
+          case DefRotulo: {
+            if (prox.tipo == DefRotulo && prox.linha == atual.linha) {
+              return atual.linha;
+            }
+            if (prox.tipo == Nome || prox.tipo == Hexadecimal || prox.tipo == Decimal || prox.tipo == Nome) {
+              return atual.linha;
+            }
+            break;
           }
-          if (prox.tipo == Nome || prox.tipo == Hexadecimal || prox.tipo == Decimal) {
-            return prox.linha;
+          case Diretiva: {
+            if (i == numberOfTokens - 1) { // Diretiva como ultima palavra sem parametros
+              return atual.linha;
+            }
+            if (atual.linha != prox.linha) {
+              return atual.linha;
+            }
+            if (strcmp(atual.palavra, ".org") == 0) {
+              if (prox.tipo != Hexadecimal && prox.tipo != Decimal) {
+                return atual.linha;
+              }
+              if (prox.tipo == Decimal) {
+                if (verificaIntervaloDecimal(prox.palavra, 0, 1023)) {
+                  return atual.linha;
+                }
+              }
+            }
+            if (strcmp(atual.palavra, ".align") == 0) {
+              if (prox.tipo != Decimal) {
+                return atual.linha;
+              }
+              if (verificaIntervaloDecimal(prox.palavra, 0, 1023)) {
+                return atual.linha;
+              }
+            }
+            if (strcmp(atual.palavra, ".wfill") == 0) {
+              if (prox.tipo != Decimal) {
+                return atual.linha;
+              }
+              if (verificaIntervaloDecimal(prox.palavra, 0, 1023)) {
+                return atual.linha;
+              }
+            }
+            if (strcmp(atual.palavra, ".set") == 0) {
+              if (prox.tipo != Nome) {
+                return atual.linha;
+              }
+              i++;
+              if (i >= numberOfTokens) {
+                return atual.linha;
+              }
+              atual = prox;
+              prox = recuperaToken(i + 1);
+              if (atual.linha != prox.linha && prox.tipo != Hexadecimal && prox.tipo != Decimal) {
+                return atual.linha;
+              }
+              if (prox.tipo == Decimal) {
+                if (verificaIntervaloDecimal(prox.palavra,
+                                             (long int) (pow(-2, 31) + 1),
+                                             (long int) (pow(2, 31) - 1))) { // -2^31+1 ate 2^31-1
+                  return atual.linha;
+                }
+              }
+            }
+            if (strcmp(atual.palavra, ".word") == 0) {
+              if (prox.tipo != Hexadecimal && prox.tipo != Decimal && prox.tipo != Nome) {
+                return atual.linha;
+              }
+              if (prox.tipo == Decimal) {
+                if (verificaIntervaloDecimal(prox.palavra,
+                                             (long int) (pow(-2, 31) + 1),
+                                             (long int) (pow(2, 31) - 1))) { // -2^31+1 ate 2^31-1
+                  return atual.linha;
+                }
+              }
+            }
+            break;
           }
-          break;
-        }
-        case Diretiva: {
+          case Instrucao: {
 
-          break;
-        }
-        case Instrucao: {
-
-          break;
-        }
-        case Hexadecimal: {
-
-          break;
-        }
-        case Decimal: {
-
-          break;
-        }
-        case Nome: {
-
-          break;
+            break;
+          }
+          case Hexadecimal: {
+            if (atual.linha == prox.linha) {
+              if (prox.tipo == DefRotulo || prox.tipo == Diretiva || prox.tipo == Instrucao) {
+                return atual.linha;
+              }
+            }
+            if (prox.tipo == Hexadecimal || prox.tipo == Decimal) { // || prox.tipo == Nome
+              return prox.linha;
+            }
+            break;
+          }
+          case Decimal: {
+            if (atual.linha == prox.linha) {
+              if (prox.tipo == DefRotulo || prox.tipo == Diretiva || prox.tipo == Instrucao) {
+                return atual.linha;
+              }
+            } else {
+              if (prox.tipo == Hexadecimal || prox.tipo == Decimal || prox.tipo == Nome) {
+                return prox.linha;
+              }
+            }
+            break;
+          }
+          case Nome: {
+            if (atual.linha == prox.linha) {
+              if (prox.tipo == DefRotulo || prox.tipo == Diretiva || prox.tipo == Instrucao
+                  || prox.tipo == Hexadecimal) {
+                return atual.linha;
+              }
+            } else {
+              if (prox.tipo == Nome) {
+                return prox.linha;
+              }
+            }
+            break;
+          }
         }
       }
-      ant = atual;
     }
   }
   return 0;
@@ -293,7 +404,7 @@ int processarEntrada(char *entrada, unsigned tamanho) {
 
   linha = strtok1(entrada, delimit);
   while (linha != NULL) {
-    if (strcmp(linha,"") != 0) {
+    if (strcmp(linha, "") != 0) {
       erroLexico = processaLinha(linha, numLinha);
 
       if (erroLexico != 0) {

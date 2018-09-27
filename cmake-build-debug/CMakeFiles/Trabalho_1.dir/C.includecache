@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/montador.h
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/montador.h
 token.h
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/token.h
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.h
 
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/processarEntrada.c
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/processarEntrada.c
 ctype.h
 -
 stdio.h
@@ -19,10 +19,12 @@ stdlib.h
 -
 string.h
 -
+math.h
+-
 montador.h
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/montador.h
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/montador.h
 token.h
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/token.h
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.h
 
-E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/token.h
+C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.h
 
