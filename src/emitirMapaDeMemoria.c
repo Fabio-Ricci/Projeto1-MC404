@@ -11,6 +11,7 @@
  */
 int emitirMapaDeMemoria()
 {
+    unsigned i;
     /* printf("Voce deve implementar essa função para a Parte 2!");*/
     return 0;
 }

@@ -12,7 +12,7 @@ char *strtok1(char *s, char *delim) {
   }
   unsigned i, len = strlen(s);
   for (i = 0; strchr(delim, s[i]) == NULL; i++) {}
-  char *str = malloc((i+1)*sizeof(char));
+  char *str = malloc((i + 1) * sizeof(char));
   strncpy(str, s, i);
   str[i] = '\0';
   if (strcmp(s, str) == 0) {
@@ -30,7 +30,7 @@ void criaToken(char *palavra, TipoDoToken tipo, int numLinha) {
   Token token;
   token.tipo = tipo;
   token.linha = numLinha;
-  token.palavra = malloc((strlen(palavra)+1) * sizeof(char));
+  token.palavra = malloc((strlen(palavra) + 1) * sizeof(char));
   strcpy(token.palavra, palavra);
   adicionarToken(token);
 }
@@ -41,7 +41,7 @@ void criaToken(char *palavra, TipoDoToken tipo, int numLinha) {
  * retorn 0 se nao eh
  */
 int ehRotulo(char *palavra) {
-  int i;
+  unsigned i;
   if (palavra[strlen(palavra) - 1] == ':') {
     if (palavra[0] == '.' || isdigit(palavra[0])) {
       return 0;  // rótulo inválido comecando com . ou numero
@@ -72,7 +72,7 @@ int ehInstrucao(char *palavra) {
                          "store", "jump", "jumpl", "jumpr", "add",
                          "addabs", "sub", "subabs", "mult", "div",
                          "lsh", "rsh", "storal", "storar"};
-  int i;
+  unsigned i;
   for (i = 0; i < 19; i++) {
     if (strcmp(palavra, intrucoes[i]) == 0) {  // verifica se eh alguma das intrucoes
       return 1;
@@ -84,7 +84,7 @@ int ehInstrucao(char *palavra) {
 int ehHexadecimal(char *palavra) {
   if (strlen(palavra) <= 10 && strlen(palavra) > 0) {
     if (palavra[0] == '0' && palavra[1] == 'x') {
-      int i;
+      unsigned i;
       for (i = 2; i < strlen(palavra); i++) {
         if (!isxdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
           return 0;
@@ -98,7 +98,7 @@ int ehHexadecimal(char *palavra) {
 
 int ehDecimal(char *palavra) {
   if (strlen(palavra) <= 8) {
-    int i;
+    unsigned i;
     for (i = 0; i < strlen(palavra); i++) {
       if (!isdigit(palavra[i])) {  // verifica se todos os digitos sao numeros
         return 0;
@@ -110,7 +110,7 @@ int ehDecimal(char *palavra) {
 }
 
 int ehNome(char *palavra) {
-  int i;
+  unsigned i;
   if (palavra[strlen(palavra) - 1] != ':') {
     if (palavra[0] == '.' || isdigit(palavra[0])) {
       return 0;  // nome inválido comecando com . ou numero
@@ -220,7 +220,7 @@ int processaLinha(char *linha, int numLinha) {
  * Transforma as letras de uma entrada em minúsculas
  */
 char *toLowerCase(char *entrada) {
-  int i;
+  unsigned i;
   for (i = 0; entrada[i] != '\0'; i++) {
     entrada[i] = (char) tolower(entrada[i]);
   }
@@ -247,7 +247,7 @@ int verificaIntervaloDecimal(char *palavra, long int min, long int max) {
  * Retorna numero da linha invalida se tokens invalidos
  */
 int verificaErroGramatical() {
-  int i, numberOfTokens = getNumberOfTokens();
+  unsigned i, numberOfTokens = getNumberOfTokens();
   Token atual, prox;
   if (numberOfTokens > 0) {
     for (i = 0; i < numberOfTokens; i++) {
@@ -334,7 +334,14 @@ int verificaErroGramatical() {
             break;
           }
           case Instrucao: {
-
+            if (!strcmp(atual.palavra, "lsh") == 0 && !strcmp(atual.palavra, "rsh") == 0 && !strcmp(atual.palavra, "ldmq") == 0) {
+              if (atual.linha != prox.linha) {
+                return atual.linha;
+              }
+              if (prox.tipo != Hexadecimal && prox.tipo != Decimal && prox.tipo != Nome) {
+                return atual.linha;
+              }
+            }
             break;
           }
           case Hexadecimal: {
