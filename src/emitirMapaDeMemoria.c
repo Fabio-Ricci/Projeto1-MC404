@@ -25,33 +25,18 @@ typedef struct MemoryWord {
 int lerTokens() {
 }
 
-int preencherRotulos() {
-
-}
-
-int emitirMapaDeMemoria() {
+// preenche os vetores de nomes e rotulos
+int preencherRotulosNomes(MemoryAddress *enderecosRotulos, char **rotulos, char **nomes, int *valoresNomes) {
   unsigned i, actualAddress = 0x000, numberOfTokens = getNumberOfTokens(),
-      position = 0, indRotulos = 0, tamRotulos = 2, indNomes = 0, tamNomes = 2, indMemoryMap = 0;
-
-  // tabela de rotulos
-  MemoryAddress *enderecosRotulos = malloc(tamRotulos * sizeof(MemoryAddress)); // endereco dos rotulos
-  char **rotulos = malloc(tamRotulos * sizeof(char*)); // nomes dos rotulos
-
-  char **nomes = malloc(tamNomes * sizeof(char*)); // vetor de nomes definidos
-  int *valoresNomes = malloc(tamNomes * sizeof(int)); // valores dos nomes definidos
-
-  Token atual, prox;
-
-  MemoryWord *memoryMap = malloc(numberOfTokens * sizeof(MemoryWord)); // mapa de memoria final
-  MemoryWord word;
-
+      position = 0, indRotulos = 0, tamRotulos = 2, indNomes = 0, tamNomes = 2;
+  Token atual;
   for (i = 0; i < numberOfTokens; i++) { // leitura dos rotulos e .sets
     atual = recuperaToken(i);
     if (atual.tipo == DefRotulo) {
       if (indRotulos == tamRotulos) {
         tamRotulos *= 2;
         enderecosRotulos = realloc(enderecosRotulos, tamRotulos * sizeof(MemoryAddress));
-        rotulos = realloc(rotulos, tamRotulos * sizeof(char*));
+        rotulos = realloc(rotulos, tamRotulos * sizeof(char *));
       }
       // endereco do rotulo
       MemoryAddress enderecoRotulo;
@@ -64,25 +49,48 @@ int emitirMapaDeMemoria() {
       strcpy(rotulos[indRotulos], atual.palavra);
 
       indRotulos++;
-    } else if (strcmp(atual.palavra, ".set")) {
+    } else if (strcmp(atual.palavra, ".set") == 0) {
       if (indNomes == tamNomes) {
         tamNomes *= 2;
-        nomes = realloc(nomes, tamNomes* sizeof(char*));
-        valoresNomes = realloc(valoresNomes, tamNomes* sizeof(char*));
+        nomes = realloc(nomes, tamNomes * sizeof(char *));
+        valoresNomes = realloc(valoresNomes, tamNomes * sizeof(char *));
       }
+      i++;
+      atual = recuperaToken(i); // pega o nome
       nomes[indNomes] = malloc((strlen(atual.palavra) + 1) * sizeof(char *));
       strcpy(nomes[indNomes], atual.palavra);
+
       i++;
       atual = recuperaToken(i); // pega o valor do nome
 
       char *aux;
       if (atual.tipo == Decimal) {
-        valoresNomes[indNomes] = strtol(prox.palavra, &aux, 10);
+        valoresNomes[indNomes] = strtol(atual.palavra, &aux, 10);
       } else if (atual.tipo == Hexadecimal) {
-        valoresNomes[indNomes] = strtol(prox.palavra, &aux, 16);
+        valoresNomes[indNomes] = strtol(atual.palavra, &aux, 16);
       }
       indNomes++;
     }
+  }
+}
+
+int emitirMapaDeMemoria() {
+  unsigned i, actualAddress = 0x000, numberOfTokens = getNumberOfTokens(),
+      position = 0, indRotulos = 0, tamRotulos = 2, indNomes = 0, tamNomes = 2, indMemoryMap = 0;
+
+  // tabela de rotulos
+  MemoryAddress *enderecosRotulos = malloc(tamRotulos * sizeof(MemoryAddress)); // endereco dos rotulos
+  char **rotulos = malloc(tamRotulos * sizeof(char *)); // nomes dos rotulos
+
+  char **nomes = malloc(tamNomes * sizeof(char *)); // vetor de nomes definidos
+  int *valoresNomes = malloc(tamNomes * sizeof(int)); // valores dos nomes definidos
+
+  Token atual, prox;
+
+  MemoryWord *memoryMap = malloc(numberOfTokens * sizeof(MemoryWord)); // mapa de memoria final
+  MemoryWord word;
+
+  preencherRotulosNomes(enderecosRotulos, rotulos, nomes, valoresNomes);
 
   for (i = 0; i < numberOfTokens; i++) { //  geracao mapa de memoria
     atual = recuperaToken(i);
@@ -103,7 +111,7 @@ int emitirMapaDeMemoria() {
         } else if (strcmp(atual.palavra, ".align") == 0) {
           char *aux;
           int multiplo = strtol(prox.palavra, &aux, 10);
-          for (;actualAddress % multiplo == 0;actualAddress++) {}
+          for (; actualAddress % multiplo == 0; actualAddress++) {}
         } else if (strcmp(atual.palavra, ".set") == 0) {
         } else if (strcmp(atual.palavra, ".wfill") == 0) {
           char *aux;
