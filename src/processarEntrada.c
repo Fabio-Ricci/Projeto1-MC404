@@ -6,6 +6,12 @@
 #include "montador.h"
 #include "token.h"
 
+/**
+ * Aluno: Fábio Camargo Ricci
+ * RA: 170781
+ * MC404
+ */
+
 char *strtok1(char *s, char *delim) {
   if (strcmp(s, "") == 0) {
     return NULL;
@@ -241,6 +247,15 @@ int verificaIntervaloDecimal(char *palavra, long int min, long int max) {
   return 0;
 }
 
+int verificaIntervaloHexadecimal(char *palavra, long int min, long int max) {
+  char *aux;
+  long int i = strtol(palavra, &aux, 16);
+  if (i > max || i < min) {
+    return 1;
+  }
+  return 0;
+}
+
 /**
  * Verifica se ha erro Gramatical
  * Retorna 0 se tokens válidos
@@ -334,7 +349,8 @@ int verificaErroGramatical() {
             break;
           }
           case Instrucao: {
-            if (!strcmp(atual.palavra, "lsh") == 0 && !strcmp(atual.palavra, "rsh") == 0 && !strcmp(atual.palavra, "ldmq") == 0) {
+            if (!strcmp(atual.palavra, "lsh") == 0 && !strcmp(atual.palavra, "rsh") == 0
+                && !strcmp(atual.palavra, "ldmq") == 0) {
               if (atual.linha != prox.linha) {
                 return atual.linha;
               }
@@ -404,7 +420,7 @@ int processarEntrada(char *entrada, unsigned tamanho) {
       erroLexico = processaLinha(linha, numLinha);
 
       if (erroLexico != 0) {
-        printf("ERRO LEXICO: palavra invalida na linha %d", erroLexico);
+        fprintf(stderr, "ERRO LEXICO: palavra invalida na linha %d!", erroLexico);
         return 1;  // erro
       }
     }
@@ -413,7 +429,7 @@ int processarEntrada(char *entrada, unsigned tamanho) {
   }
   int erroGramatical = verificaErroGramatical();
   if (erroGramatical != 0) {
-    printf("ERRO GRAMATICAL: palavra invalida na linha %d", erroGramatical);
+    fprintf(stderr, "ERRO GRAMATICAL: palavra invalida na linha %d!", erroGramatical);
     return 1;
   }
   return 0;
