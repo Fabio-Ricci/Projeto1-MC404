@@ -16,16 +16,24 @@ char *strtok1(char *s, char *delim) {
   if (strcmp(s, "") == 0) {
     return NULL;
   }
-  unsigned i, len = strlen(s);
-  for (i = 0; strchr(delim, s[i]) == NULL; i++) {}
-  char *str = malloc((i + 1) * sizeof(char));
-  strncpy(str, s, i);
-  str[i] = '\0';
-  if (strcmp(s, str) == 0) {
-    s[0] = '\0';
-  } else {
-    strncpy(s, s + i + 1, len);
+
+  int len = strlen(s);
+  char *str = (char *) malloc((len + 1) * sizeof(char));
+  unsigned i, j;
+
+  for (i = 0; i < len; i++) {
+    str[i] = s[i];
+    if (strchr(delim, s[i]) != NULL) { // achou ocorrencia
+      str[i] = '\0';
+      for (j = 0; j < len - i; j++) {
+        s[j] = s[i + j + 1];
+      }
+      return str;
+    }
   }
+  // se chega aqui acabou a string
+  str[i] = '\0';
+  s[0] = '\0';
   return str;
 }
 
@@ -247,15 +255,6 @@ int verificaIntervaloDecimal(char *palavra, long int min, long int max) {
   return 0;
 }
 
-int verificaIntervaloHexadecimal(char *palavra, long int min, long int max) {
-  char *aux;
-  long int i = strtol(palavra, &aux, 16);
-  if (i > max || i < min) {
-    return 1;
-  }
-  return 0;
-}
-
 /**
  * Verifica se ha erro Gramatical
  * Retorna 0 se tokens válidos
@@ -420,7 +419,7 @@ int processarEntrada(char *entrada, unsigned tamanho) {
       erroLexico = processaLinha(linha, numLinha);
 
       if (erroLexico != 0) {
-        fprintf(stderr, "ERRO LEXICO: palavra invalida na linha %d!", erroLexico);
+        fprintf(stderr, "ERRO LEXICO: palavra inválida na linha %d!", erroLexico);
         return 1;  // erro
       }
     }
@@ -429,7 +428,7 @@ int processarEntrada(char *entrada, unsigned tamanho) {
   }
   int erroGramatical = verificaErroGramatical();
   if (erroGramatical != 0) {
-    fprintf(stderr, "ERRO GRAMATICAL: palavra invalida na linha %d!", erroGramatical);
+    fprintf(stderr, "ERRO GRAMATICAL: palavra na linha %d!", erroGramatical);
     return 1;
   }
   return 0;

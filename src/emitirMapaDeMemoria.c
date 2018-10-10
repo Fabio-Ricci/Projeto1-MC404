@@ -351,10 +351,10 @@ int emitirMapaDeMemoria() {
           char *aux;
           int multiplo = strtol(prox.palavra, &aux, 10);
           for (; actualAddress % multiplo == 0;) {
-            word = createWord(actualAddress, position, "00");
-            strcpy(word.memoryReference, "000");
-            memoryMap[tamMemoryMap] = word;
-            tamMemoryMap++;
+            //word = createWord(actualAddress, position, "00");
+            //strcpy(word.memoryReference, "000");
+            //memoryMap[tamMemoryMap] = word;
+            //tamMemoryMap++;
             if (position == 1) {
               actualAddress++;
               position = 0;
@@ -408,10 +408,6 @@ int emitirMapaDeMemoria() {
         break;
       }
       case Instrucao: {
-        char *intrucoes[19] = {"ld", "ldinv", "ldabs", "ldmq", "ldmqmx",
-                               "store", "jump", "jumpl", "jumpr", "add",
-                               "addabs", "sub", "subabs", "mult", "div",
-                               "lsh", "rsh", "storal", "storar"};
         if (strcmp(atual.palavra, "ld") == 0) {
           word = fillInstrucao(prox,
                                actualAddress,
@@ -659,8 +655,7 @@ int emitirMapaDeMemoria() {
 
     if (strcmp(word.memoryReference, "-1") == 0) { // codigo definido para erro de nao definido
       fprintf(stderr,
-              "ERRO: Usado mas n%co definido: %s!\n",
-              198,
+              "ERRO: Usado mas não definido: %s!\n",
               prox.palavra); // prox contera o nome do rotulo ou nome referenciado
       return 1;
     }
