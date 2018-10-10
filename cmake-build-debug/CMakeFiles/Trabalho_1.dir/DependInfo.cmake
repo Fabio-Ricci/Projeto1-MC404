@@ -4,10 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/emitirMapaDeMemoria.c" "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj"
-  "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/main.c" "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/main.c.obj"
-  "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/processarEntrada.c" "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj"
-  "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/src/token.c" "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/token.c.obj"
+  "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/emitirMapaDeMemoria.c" "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/emitirMapaDeMemoria.c.obj"
+  "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/main.c" "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/main.c.obj"
+  "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/processarEntrada.c" "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/processarEntrada.c.obj"
+  "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/src/token.c" "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/cmake-build-debug/CMakeFiles/Trabalho_1.dir/src/token.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

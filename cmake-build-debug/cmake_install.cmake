@@ -1,4 +1,4 @@
-# Install script for directory: C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404
+# Install script for directory: E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Fabio/UNICAMP/MC404/Trabalho 1/Projeto1-MC404/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "E:/Fabio/UNICAMP/4 Semestre/MC404/Projeto 1/Projeto1-MC404/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
