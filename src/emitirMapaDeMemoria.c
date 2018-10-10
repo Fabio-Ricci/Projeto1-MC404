@@ -142,7 +142,7 @@ MemoryWord fillInstrucao(Token token,
 char **adicionarWord(char **map, MemoryWord *memoryMap, int i) {
   unsigned j, k;
   char end[4];
-  snprintf(end, 4, "%03x", memoryMap[i].memoryAddress.memoryAddress);
+  snprintf(end, 4, "%03X", memoryMap[i].memoryAddress.memoryAddress);
   for (j = 0; j < 3; j++) { // preenche o endereco da linha atual
     map[i][j] = end[j];
   }
@@ -257,7 +257,7 @@ int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
   if (i % 2 == 1) {
     preencherDireitaComZero(map, i);
   }
-  for (i=0;i<linhaAtual;i++) {
+  for (i = 0; i < linhaAtual; i++) {
     printf("%s\n", map[i]);
   }
   return linhaAtual;
@@ -278,7 +278,7 @@ int emitirMapaDeMemoria() {
 
   Token atual, prox;
 
-  MemoryWord *memoryMap = malloc(numberOfTokens * sizeof(MemoryWord)); // mapa de memoria final
+  MemoryWord *memoryMap = malloc(4096 * sizeof(MemoryWord)); // mapa de memoria final
   MemoryWord word;
 
   /***********************************************************************************************/
@@ -659,19 +659,16 @@ int emitirMapaDeMemoria() {
 
     if (strcmp(word.memoryReference, "-1") == 0) { // codigo definido para erro de nao definido
       fprintf(stderr,
-              "ERRO: Usado mas nao definido: %s!",
+              "ERRO: Usado mas n%co definido: %s!\n",
+              198,
               prox.palavra); // prox contera o nome do rotulo ou nome referenciado
       return 1;
     }
     if (strcmp(word.memoryReference, "-2") == 0) { // codigo definida para outros erros
-      fprintf(stderr, "Impossível montar o código!");
+      fprintf(stderr, "IMPOSSIVEL MONTAR CODIGO!\n");
       return 1;
     }
   }
-  //char **map =
-      gerarMapa(memoryMap, tamMemoryMap);
-//  for (i = 0; i < tam; i++) {
-//    printf("%s\n", map[i]);
-//  }
+  gerarMapa(memoryMap, tamMemoryMap);
   return 0;
 }
