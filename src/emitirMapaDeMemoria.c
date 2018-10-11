@@ -232,7 +232,7 @@ void preencherNumLinha(char **map, MemoryWord *memoryMap, unsigned linhaAtual, u
 }
 
 int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
-  unsigned i, linhaAtual = 0, lastPosition = 1;
+  unsigned i, linhaAtual = 0, lastPosition = 1, numLinhas = 0;
   char **map = malloc(tamMemoryMap * sizeof(char *));
   for (i = 0; i < tamMemoryMap; i++) {
     if (memoryMap[i].memoryAddress.position == 0) { // nova linha
@@ -243,8 +243,10 @@ int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
     if (strcmp(memoryMap[i].instructionCode, "99") == 0) { //.word
       adicionarWord(map, memoryMap, linhaAtual);
       linhaAtual++;
+      numLinhas++;
     } else { // instrucao
       if (memoryMap[i].memoryAddress.position == 0) {
+        numLinhas++;
         adicionarInstrucaoEsquerda(map, memoryMap, linhaAtual, i);
       } else {
         adicionarInstrucaoDireita(map, memoryMap, linhaAtual, i);
@@ -253,7 +255,7 @@ int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
     }
     lastPosition = !lastPosition;
   }
-  for (i = 0; i <= linhaAtual; i++) { // printa o mapa
+  for (i = 0; i < numLinhas; i++) { // printa o mapa
     printf("%s\n", map[i]);
   }
   return linhaAtual;
@@ -340,7 +342,7 @@ int emitirMapaDeMemoria() {
       }
     } else if (strcmp(atual.palavra, ".wfill") == 0) {
       char *aux;
-      int j, n;
+      int j, n=0;
       i++;
       atual = recuperaToken(i);
       if (atual.tipo == Decimal) {
@@ -390,7 +392,7 @@ int emitirMapaDeMemoria() {
             strcpy(word.memoryReference, "-2"); // impossivel montar o codigo
           } else {
             char *aux;
-            int j, n;
+            int j, n=0;
             if (prox.tipo == Decimal) {
               n = strtol(prox.palavra, &aux, 10);
             } else if (prox.tipo == Nome) {

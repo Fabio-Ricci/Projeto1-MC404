@@ -12,8 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fadebe7b-7fd3-4405-9f95-bfcf2e85043b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/emitirMapaDeMemoria.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/emitirMapaDeMemoria.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,8 +41,8 @@
     <session id="-426405966">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.closed" value="10" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.16" value="1" />
@@ -51,18 +51,18 @@
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Makefile" value="3" />
-          <entry key="Trabalho_1 (disassembly)" value="7" />
+          <entry key="Trabalho_1 (disassembly)" value="9" />
           <entry key="c" value="22" />
           <entry key="h" value="5" />
           <entry key="in" value="89" />
           <entry key="py" value="1" />
-          <entry key="res" value="12" />
+          <entry key="res" value="14" />
           <entry key="txt" value="6" />
         </counts>
       </usages-collector>
@@ -70,15 +70,15 @@
         <counts>
           <entry key="CMakeCache.txt" value="4" />
           <entry key="CMakeLists.txt" value="2" />
-          <entry key="Disassembly" value="7" />
+          <entry key="Disassembly" value="9" />
           <entry key="ObjectiveC" value="28" />
-          <entry key="PLAIN_TEXT" value="103" />
+          <entry key="PLAIN_TEXT" value="105" />
           <entry key="Python" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="7016" />
+          <entry key="c" value="7076" />
           <entry key="h" value="1" />
           <entry key="in" value="6" />
           <entry key="m" value="39" />
@@ -90,7 +90,7 @@
           <entry key="CMakeCache.txt" value="24" />
           <entry key="CMakeLists.txt" value="41" />
           <entry key="Doxygen file" value="5" />
-          <entry key="ObjectiveC" value="7051" />
+          <entry key="ObjectiveC" value="7111" />
           <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
@@ -157,8 +157,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/emitirMapaDeMemoria.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2592">
-              <caret line="675" selection-start-line="675" selection-end-line="675" />
+            <state relative-caret-position="42">
+              <caret line="234" column="61" selection-start-line="234" selection-start-column="61" selection-end-line="234" selection-end-column="61" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
                 <element signature="e#359#646#0" />
@@ -168,11 +168,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testes/arq23.in">
+        <entry file="file://$PROJECT_DIR$/resultados/arq22.parte2.res">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-            </state>
+            <state relative-caret-position="-380" />
           </provider>
         </entry>
       </file>
@@ -200,6 +198,7 @@
       <find>00</find>
       <find>snprint</find>
       <find>0F</find>
+      <find>, n;</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -238,17 +237,16 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="31" />
-    <option name="y" value="48" />
-    <option name="width" value="1937" />
-    <option name="height" value="1057" />
+    <option name="x" value="30" />
+    <option name="y" value="47" />
+    <option name="width" value="1938" />
+    <option name="height" value="1058" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -279,6 +277,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -312,7 +311,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Trabalho_1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../testes/arq23.in" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Trabalho_1" TARGET_NAME="Trabalho_1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Trabalho_1" RUN_TARGET_NAME="Trabalho_1">
+    <configuration name="Trabalho_1" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../testes/arq22.in" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Trabalho_1" TARGET_NAME="Trabalho_1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Trabalho_1" RUN_TARGET_NAME="Trabalho_1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -414,23 +413,24 @@
       <workItem from="1538832309549" duration="9260000" />
       <workItem from="1538948618472" duration="8397000" />
       <workItem from="1539025566259" duration="7261000" />
+      <workItem from="1539271358906" duration="485000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207225000" />
+    <option name="totallyTimeSpent" value="207821000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30402684" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3080537" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5516778" visible="true" weight="0.4141844" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.63154364" weight="0.39432624" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5516778" weight="0.4141844" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.63154364" visible="true" weight="0.39432624" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -458,18 +458,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/emitirMapaDeMemoria.c</url>
-          <line>256</line>
+          <line>258</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/emitirMapaDeMemoria.c</url>
           <line>242</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/emitirMapaDeMemoria.c</url>
-          <line>514</line>
-          <option name="timeStamp" value="77" />
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -743,8 +738,17 @@
     <entry file="file://$PROJECT_DIR$/testes/arq22.in">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/testes/arq23.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resultados/arq22.parte2.res">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-380" />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resultados/arq23.parte2.res">
       <provider selected="true" editor-type-id="text-editor">
@@ -753,17 +757,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testes/arq23.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="22" column="17" lean-forward="true" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/emitirMapaDeMemoria.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2592">
-          <caret line="675" selection-start-line="675" selection-end-line="675" />
+        <state relative-caret-position="42">
+          <caret line="234" column="61" selection-start-line="234" selection-start-column="61" selection-end-line="234" selection-end-column="61" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
             <element signature="e#359#646#0" />
