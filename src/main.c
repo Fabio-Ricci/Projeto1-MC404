@@ -32,7 +32,7 @@ int main(int args, char** argv)
   }
 
   //Senão imprime os tokens coletados
-  //imprimeListaTokens();
+  imprimeListaTokens();
 
   return emitirMapaDeMemoria();
 }

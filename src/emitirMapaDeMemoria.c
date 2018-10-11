@@ -30,6 +30,20 @@ MemoryWord createWord(unsigned actualAddress, unsigned position, char code[3]) {
   return word;
 }
 
+Token getValorNome(Token *nomes, Token *valoresNomes, unsigned tamNomes, char *palavra) {
+  unsigned i;
+  for (i = 0; i < tamNomes; i++) {
+    if (strcmp(nomes[i].palavra, palavra) == 0) { // achou o nome
+      if (valoresNomes[i].tipo == Decimal || valoresNomes[i].tipo == Hexadecimal) {
+        return valoresNomes[i];
+      }
+    }
+  }
+  Token token;
+  token.linha = -1; // token nao existe
+  return token;
+}
+
 MemoryAddress getEndereco(char **rotulos,
                           MemoryAddress *enderecosRotulos,
                           unsigned tamRotulos,
@@ -141,15 +155,7 @@ MemoryWord fillInstrucao(Token token,
 
 char **adicionarWord(char **map, MemoryWord *memoryMap, int i) {
   unsigned j, k;
-  char end[4];
-  snprintf(end, 4, "%03X", memoryMap[i].memoryAddress.memoryAddress);
-  for (j = 0; j < 3; j++) { // preenche o endereco da linha atual
-    map[i][j] = end[j];
-  }
-  map[i][j] = ' ';
-  j++;
-
-  for (k = 0; k < 10; j++, k++) {
+  for (j = 4, k = 0; k < 10; j++, k++) {
     map[i][j] = memoryMap[i].memoryReference[k];
     if (k == 1 || k == 4 || k == 6) { // indices que contem espacos
       j++;
@@ -162,14 +168,7 @@ char **adicionarWord(char **map, MemoryWord *memoryMap, int i) {
 }
 
 char **adicionarInstrucaoEsquerda(char **map, MemoryWord *memoryMap, unsigned linhaAtual, unsigned i) {
-  unsigned j;
-  char end[4];
-  snprintf(end, 4, "%03x", memoryMap[i].memoryAddress.memoryAddress);
-  for (j = 0; j < 3; j++) { // preenche o endereco da linha atual
-    map[linhaAtual][j] = end[j];
-  }
-  map[linhaAtual][j] = ' ';
-  j++;
+  unsigned j = 4;
 
   map[linhaAtual][j] = memoryMap[i].instructionCode[0];
   j++;
@@ -204,43 +203,42 @@ char **adicionarInstrucaoDireita(char **map, MemoryWord *memoryMap, unsigned lin
   j++;
   map[linhaAtual][j] = memoryMap[i].memoryReference[2];
   j++;
-  map[linhaAtual][j] = ' ';
-  j++;
 
   map[linhaAtual][j] = '\0';
 
   return map;
 }
 
-char **preencherDireitaComZero(char **map, int i) {
-  unsigned j = 11; // posicao que comeca a palavra da direita
-  map[i][j] = '0';
-  j++;
-  map[i][j] = ' ';
-  j++;
-  map[i][j] = '0';
-  j++;
+void preencherLinhaComZero(char **map, MemoryWord *memoryMap, unsigned linhaAtual) {
+  unsigned i;
+  for (i = 0; i < 17; i++) {
+    if (i == 3 || i == 6 || i == 10 || i == 13) {
+      map[linhaAtual][i] = ' ';
+    } else {
+      map[linhaAtual][i] = '0';
+    }
+  }
+  map[linhaAtual][i] = '\0';
+}
 
-  map[i][j] = '0';
-  j++;
-  map[i][j] = ' ';
-  j++;
-  map[i][j] = '0';
-  j++;
-  map[i][j] = '0';
-  j++;
-
-  map[i][j] = '\0';
-
-  return map;
+void preencherNumLinha(char **map, MemoryWord *memoryMap, unsigned linhaAtual, unsigned i) {
+  unsigned j;
+  char end[4];
+  sprintf(end, "%03X", memoryMap[i].memoryAddress.memoryAddress);
+  for (j = 0; j < 3; j++) { // preenche o endereco da linha atual
+    map[linhaAtual][j] = end[j];
+  }
+  map[linhaAtual][j] = ' ';
 }
 
 int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
-  unsigned i, linhaAtual = 0;
+  unsigned i, linhaAtual = 0, lastPosition = 1;
   char **map = malloc(tamMemoryMap * sizeof(char *));
   for (i = 0; i < tamMemoryMap; i++) {
     if (memoryMap[i].memoryAddress.position == 0) { // nova linha
-      map[i] = malloc(19 * sizeof(char *));
+      map[linhaAtual] = malloc(18 * sizeof(char *));
+      preencherLinhaComZero(map, memoryMap, linhaAtual);
+      preencherNumLinha(map, memoryMap, linhaAtual, i);
     }
     if (strcmp(memoryMap[i].instructionCode, "99") == 0) { //.word
       adicionarWord(map, memoryMap, linhaAtual);
@@ -253,11 +251,9 @@ int gerarMapa(MemoryWord *memoryMap, int tamMemoryMap) {
         linhaAtual++;
       }
     }
+    lastPosition = !lastPosition;
   }
-  if (i % 2 == 1) {
-    preencherDireitaComZero(map, i);
-  }
-  for (i = 0; i < linhaAtual; i++) {
+  for (i = 0; i <= linhaAtual; i++) { // printa o mapa
     printf("%s\n", map[i]);
   }
   return linhaAtual;
@@ -319,12 +315,43 @@ int emitirMapaDeMemoria() {
 
       indNomes++;
       tamNomes++;
+    } if (strcmp(atual.palavra, ".org") == 0) {
+      char *aux;
+      i++;
+      atual = recuperaToken(i);
+      if (atual.tipo == Decimal) {
+        actualAddress = (int) strtol(atual.palavra, &aux, 10);
+      } else if (atual.tipo == Hexadecimal) {
+        actualAddress = (int) strtol(atual.palavra, &aux, 16);
+      }
+      position = 0;
+    } else if (strcmp(atual.palavra, ".align") == 0) {
+      char *aux;
+      i++;
+      atual = recuperaToken(i);
+      int multiplo = strtol(atual.palavra, &aux, 10);
+      for (; actualAddress % multiplo != 0;) {
+        if (position == 1) {
+          actualAddress++;
+          position = 0;
+        } else {
+          position = 1;
+        }
+      }
     } else if (strcmp(atual.palavra, ".wfill") == 0) {
       char *aux;
-      int j, n = strtol(prox.palavra, &aux, 10);
+      int j, n;
       i++;
-      atual = prox;
-      prox = recuperaToken(i + 1);
+      atual = recuperaToken(i);
+      if (atual.tipo == Decimal) {
+        n = strtol(atual.palavra, &aux, 10);
+      } else if (atual.tipo == Nome) {
+        Token token = getValorNome(nomes, valoresNomes, tamNomes, atual.palavra);
+        if (token.linha == -1) {
+          strcpy(word.memoryReference, "-1"); // usado mas nao definido
+          break;
+        }
+      }
       for (j = 0; j < n; j++, actualAddress++) {} // avanca as posicoes de memoria
     } else if (strcmp(atual.palavra, ".word") == 0) {
       actualAddress++; // avanca a posicao de memoria
@@ -350,11 +377,7 @@ int emitirMapaDeMemoria() {
         } else if (strcmp(atual.palavra, ".align") == 0) {
           char *aux;
           int multiplo = strtol(prox.palavra, &aux, 10);
-          for (; actualAddress % multiplo == 0;) {
-            //word = createWord(actualAddress, position, "00");
-            //strcpy(word.memoryReference, "000");
-            //memoryMap[tamMemoryMap] = word;
-            //tamMemoryMap++;
+          for (; actualAddress % multiplo != 0;) {
             if (position == 1) {
               actualAddress++;
               position = 0;
@@ -367,7 +390,16 @@ int emitirMapaDeMemoria() {
             strcpy(word.memoryReference, "-2"); // impossivel montar o codigo
           } else {
             char *aux;
-            int j, n = strtol(prox.palavra, &aux, 10);
+            int j, n;
+            if (prox.tipo == Decimal) {
+              n = strtol(prox.palavra, &aux, 10);
+            } else if (prox.tipo == Nome) {
+              Token token = getValorNome(nomes, valoresNomes, tamNomes, prox.palavra);
+              if (token.linha == -1) {
+                strcpy(word.memoryReference, "-1"); // usado mas nao definido
+                break;
+              }
+            }
             i++;
             atual = prox;
             prox = recuperaToken(i + 1);
@@ -448,12 +480,12 @@ int emitirMapaDeMemoria() {
           memoryMap[tamMemoryMap] = word;
           tamMemoryMap++;
         } else if (strcmp(atual.palavra, "ldmq") == 0) {
-          word = createWord(actualAddress, position, "10");
-          strcpy(word.memoryReference, "00");
+          word = createWord(actualAddress, position, "0A");
+          strcpy(word.memoryReference, "000");
 
           memoryMap[tamMemoryMap] = word;
           tamMemoryMap++;
-        } else if (strcmp(atual.palavra, "ldmgmx") == 0) {
+        } else if (strcmp(atual.palavra, "ldmqmx") == 0) {
           word = fillInstrucao(prox,
                                actualAddress,
                                position,
@@ -485,7 +517,7 @@ int emitirMapaDeMemoria() {
             strcpy(word.memoryReference, prox.palavra);
           } else if (prox.tipo == Hexadecimal) {
             word = createWord(actualAddress, position, "0D"); // pula para a esquerda
-            strcpy(word.memoryReference, prox.palavra);
+            strcpy(word.memoryReference, (prox.palavra+2)); // +2 para pular o 0x
           } else if (prox.tipo == Nome) {
             MemoryAddress
                 add = getEndereco(rotulos, enderecosRotulos, tamRotulos, nomes, valoresNomes, tamNomes, prox.palavra);
@@ -495,35 +527,41 @@ int emitirMapaDeMemoria() {
               word = createWord(actualAddress, position, "0E"); // pula para a direita
             }
             char aux[4];
-            snprintf(aux, 3, "%03x", add.memoryAddress);
+            sprintf(aux, "%03X", add.memoryAddress);
             strcpy(word.memoryReference, aux);
           }
+          memoryMap[tamMemoryMap] = word;
+          tamMemoryMap++;
         } else if (strcmp(atual.palavra, "jumpl") == 0) {
           word = createWord(actualAddress, position, "0F"); // pulo condicional para a esquerda
           if (prox.tipo == Decimal) {
             strcpy(word.memoryReference, prox.palavra);
           } else if (prox.tipo == Hexadecimal) {
-            strcpy(word.memoryReference, prox.palavra);
+            strcpy(word.memoryReference, (prox.palavra+2)); // +2 para pular o 0x
           } else if (prox.tipo == Nome) {
             MemoryAddress
                 add = getEndereco(rotulos, enderecosRotulos, tamRotulos, nomes, valoresNomes, tamNomes, prox.palavra);
             char aux[4];
-            snprintf(aux, 3, "%03x", add.memoryAddress);
+            sprintf(aux, "%03X", add.memoryAddress);
             strcpy(word.memoryReference, aux);
           }
+          memoryMap[tamMemoryMap] = word;
+          tamMemoryMap++;
         } else if (strcmp(atual.palavra, "jumpr") == 0) {
           word = createWord(actualAddress, position, "10"); // pulo condicional para a direita
           if (prox.tipo == Decimal) {
             strcpy(word.memoryReference, prox.palavra);
           } else if (prox.tipo == Hexadecimal) {
-            strcpy(word.memoryReference, prox.palavra);
+            strcpy(word.memoryReference, (prox.palavra+2)); // +2 para pular o 0x
           } else if (prox.tipo == Nome) {
             MemoryAddress
                 add = getEndereco(rotulos, enderecosRotulos, tamRotulos, nomes, valoresNomes, tamNomes, prox.palavra);
             char aux[4];
-            snprintf(aux, 3, "%03x", add.memoryAddress);
+            sprintf(aux, "%03X", add.memoryAddress);
             strcpy(word.memoryReference, aux);
           }
+          memoryMap[tamMemoryMap] = word;
+          tamMemoryMap++;
         } else if (strcmp(atual.palavra, "add") == 0) {
           word = fillInstrucao(prox,
                                actualAddress,
@@ -604,13 +642,13 @@ int emitirMapaDeMemoria() {
           tamMemoryMap++;
         } else if (strcmp(atual.palavra, "lsh") == 0) {
           word = createWord(actualAddress, position, "14");
-          strcpy(word.memoryReference, "00");
+          strcpy(word.memoryReference, "000");
 
           memoryMap[tamMemoryMap] = word;
           tamMemoryMap++;
         } else if (strcmp(atual.palavra, "rsh") == 0) {
           word = createWord(actualAddress, position, "15");
-          strcpy(word.memoryReference, "00");
+          strcpy(word.memoryReference, "000");
 
           memoryMap[tamMemoryMap] = word;
           tamMemoryMap++;
@@ -619,12 +657,12 @@ int emitirMapaDeMemoria() {
           if (prox.tipo == Decimal) {
             strcpy(word.memoryReference, prox.palavra);
           } else if (prox.tipo == Hexadecimal) {
-            strcpy(word.memoryReference, prox.palavra);
+            strcpy(word.memoryReference, (prox.palavra+2)); // +2 para pular o 0x
           } else if (prox.tipo == Nome) {
             MemoryAddress
                 add = getEndereco(rotulos, enderecosRotulos, tamRotulos, nomes, valoresNomes, tamNomes, prox.palavra);
             char aux[4];
-            snprintf(aux, 3, "%03x", add.memoryAddress);
+            sprintf(aux, "%03X", add.memoryAddress);
             strcpy(word.memoryReference, aux);
           }
           memoryMap[tamMemoryMap] = word;
@@ -634,12 +672,12 @@ int emitirMapaDeMemoria() {
           if (prox.tipo == Decimal) {
             strcpy(word.memoryReference, prox.palavra);
           } else if (prox.tipo == Hexadecimal) {
-            strcpy(word.memoryReference, prox.palavra);
+            strcpy(word.memoryReference, (prox.palavra+2)); // +2 para pular o 0x
           } else if (prox.tipo == Nome) {
             MemoryAddress
                 add = getEndereco(rotulos, enderecosRotulos, tamRotulos, nomes, valoresNomes, tamNomes, prox.palavra);
             char aux[4];
-            snprintf(aux, 3, "%03x", add.memoryAddress);
+            sprintf(aux, "%03X", add.memoryAddress);
             strcpy(word.memoryReference, aux);
           }
           memoryMap[tamMemoryMap] = word;
